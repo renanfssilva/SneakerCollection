@@ -1,0 +1,23 @@
+@SneakerCollection.API_HostAddress = http://localhost:5067
+
+POST {{SneakerCollection.API_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Renan",
+    "lastName": "Fernandes Silva",
+    "email": "renanfssilva@gmail.com",
+    "password": "Renan123!"
+}
+
+###
+
+POST {{SneakerCollection.API_HostAddress}}/auth/register
+Content-Type: application/json
+
+{
+    "firstName": "Gabriella",
+    "lastName": "Coelho de Andrade",
+    "email": "email@gmail.com",
+    "password": "Gabi123!"
+}
