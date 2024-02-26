@@ -6,8 +6,12 @@ namespace SneakerCollection.Application.Authentication.Queries.Login
     {
         public LoginQueryValidator()
         {
-            RuleFor(x => x.Email).NotEmpty();
-            RuleFor(x => x.Password).NotEmpty();
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress();
+
+            RuleFor(x => x.Password)
+                .NotEmpty();
         }
     }
 }
