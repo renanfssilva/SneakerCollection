@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using SneakerCollection.Application.Common.Interfaces.Persistence;
 using SneakerCollection.Domain.SneakerAggregate;
 using SneakerCollection.Domain.SneakerAggregate.ValueObjects;
@@ -14,16 +15,45 @@ namespace SneakerCollection.Infrastructure.Persistence.Repositories
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsAsync(SneakerId sneakerId)
-            => await dbContext.Sneakers.AnyAsync(sneaker => sneaker.Id == sneakerId);
+        public async Task DeleteAsync(SneakerId sneakerId, UserId userId)
+        {
+            var sneaker = await GetByIdAsync(sneakerId, userId);
 
-        public async Task<Sneaker?> GetByIdAsync(SneakerId sneakerId)
-            => await dbContext.Sneakers.SingleOrDefaultAsync(sneaker => sneaker.Id == sneaker.Id);
+            if (sneaker is not null)
+            {
+                dbContext.Remove(sneaker);
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<bool> ExistsAsync(SneakerId sneakerId, UserId userId)
+            => await dbContext.Sneakers.AnyAsync(sneaker => sneaker.Id == sneakerId
+                                                        && sneaker.UserId == userId);
+
+        public async Task<Sneaker?> GetByIdAsync(SneakerId sneakerId, UserId userId)
+            => await dbContext.Sneakers.SingleOrDefaultAsync(sneaker => sneaker.Id == sneakerId
+                                                                    && sneaker.UserId == userId);
 
         public async Task<List<Sneaker>> ListAsync(UserId userId)
             => await dbContext.Sneakers
                         .Where(sneaker => sneaker.UserId == userId)
                         .ToListAsync();
+
+        public async Task PatchAsync(JsonPatchDocument<Sneaker> sneakerPatch, Sneaker sneaker)
+        {
+            var sneakerToBeUpdated = Sneaker.Update(sneaker.Id,
+                sneaker.Name,
+                sneaker.Brand,
+                sneaker.Price,
+                sneaker.SizeUS,
+                sneaker.Year,
+                sneaker.Rate,
+                sneaker.UserId,
+                sneaker.CreatedAt);
+
+            sneakerPatch.ApplyTo(sneakerToBeUpdated);
+            await dbContext.SaveChangesAsync();
+        }
 
         public async Task UpdateAsync(Sneaker sneaker)
         {

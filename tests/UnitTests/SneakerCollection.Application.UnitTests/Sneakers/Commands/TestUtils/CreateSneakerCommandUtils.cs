@@ -1,4 +1,5 @@
 ﻿using SneakerCollection.Application.Sneakers.Commands.CreateSneaker;
+using SneakerCollection.Application.Sneakers.Common;
 using SneakerCollection.Application.UnitTests.TestUtils.Constants;
 
 namespace SneakerCollection.Application.UnitTests.Sneakers.Commands.TestUtils

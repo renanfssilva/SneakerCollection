@@ -61,6 +61,30 @@ namespace SneakerCollection.Domain.SneakerAggregate
                 DateTime.UtcNow);
         }
 
+        public static Sneaker Update(
+            SneakerId sneakerId,
+            string name,
+            Brand brand,
+            Price price,
+            double sizeUS,
+            int year,
+            int rate,
+            UserId userId,
+            DateTime createdAt)
+        {
+            return new Sneaker(
+                sneakerId,
+                name,
+                brand,
+                price,
+                sizeUS,
+                year,
+                rate,
+                userId,
+                createdAt,
+                DateTime.UtcNow);
+        }
+
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private Sneaker()
         {

@@ -3,7 +3,7 @@ using MediatR;
 using SneakerCollection.Application.Common.Interfaces.Persistence;
 using SneakerCollection.Domain.SneakerAggregate;
 using SneakerCollection.Domain.UserAggregate.ValueObjects;
-namespace SneakerCollection.Application.Sneakers.Queries
+namespace SneakerCollection.Application.Sneakers.Queries.ListSneakers
 {
     public class ListSneakersQueryHandler(ISneakerRepository sneakerRepository) : IRequestHandler<ListSneakersQuery, ErrorOr<List<Sneaker>>>
     {

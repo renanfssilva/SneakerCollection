@@ -13,13 +13,22 @@ namespace SneakerCollection.Domain.UserAggregate
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
-        private User(string firstName, string lastName, string email, string password, UserId? userId = null)
+        private User(
+            string firstName,
+            string lastName,
+            string email,
+            string password,
+            UserId? userId = null,
+            DateTime? createdAt = null,
+            DateTime? updatedAt = null)
             : base(userId ?? UserId.CreateUnique())
         {
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             Password = password;
+            CreatedAt = createdAt ?? DateTime.UtcNow;
+            UpdatedAt = updatedAt ?? DateTime.UtcNow;
         }
 
         public static User Create(string firstName, string lastName, string email, string password)
