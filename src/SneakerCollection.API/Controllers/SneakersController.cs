@@ -58,7 +58,7 @@ namespace SneakerCollection.API.Controllers
         }
 
         [HttpPatch("{sneakerId:guid}")]
-        public async Task<IActionResult> PatchSneakerAsync([FromRoute] Guid sneakerId, [FromBody] JsonPatchDocument<CreateSneakerCommand> request)
+        public async Task<IActionResult> PatchSneakerAsync([FromRoute] Guid sneakerId, [FromBody] JsonPatchDocument<UpdateSneakerRequest> request)
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var command = mapper.Map<UpdateSneakerCommand>((sneakerId, request, userId));

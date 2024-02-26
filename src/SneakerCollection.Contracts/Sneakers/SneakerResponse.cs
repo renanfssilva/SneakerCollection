@@ -7,9 +7,7 @@
         PriceResponse Price,
         double SizeUS,
         int Year,
-        int Rate,
-        DateTime CreatedAt,
-        DateTime UpdatedAt);
+        int Rate);
 
     public record BrandResponse(
         string Name);

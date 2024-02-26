@@ -10,7 +10,8 @@ namespace SneakerCollection.API
         public static IServiceCollection AddPresentation(this IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson();
             services.AddEndpointsApiExplorer();
             services.AddSwagger();
 

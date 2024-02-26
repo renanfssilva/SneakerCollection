@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SneakerCollection.Application.Common.Interfaces.Persistence;
 using SneakerCollection.Domain.SneakerAggregate;
 using SneakerCollection.Domain.SneakerAggregate.ValueObjects;
 using SneakerCollection.Domain.UserAggregate.ValueObjects;
+using System.Reflection;
 
 namespace SneakerCollection.Infrastructure.Persistence.Repositories
 {
@@ -38,22 +38,6 @@ namespace SneakerCollection.Infrastructure.Persistence.Repositories
             => await dbContext.Sneakers
                         .Where(sneaker => sneaker.UserId == userId)
                         .ToListAsync();
-
-        public async Task PatchAsync(JsonPatchDocument<Sneaker> sneakerPatch, Sneaker sneaker)
-        {
-            var sneakerToBeUpdated = Sneaker.Update(sneaker.Id,
-                sneaker.Name,
-                sneaker.Brand,
-                sneaker.Price,
-                sneaker.SizeUS,
-                sneaker.Year,
-                sneaker.Rate,
-                sneaker.UserId,
-                sneaker.CreatedAt);
-
-            sneakerPatch.ApplyTo(sneakerToBeUpdated);
-            await dbContext.SaveChangesAsync();
-        }
 
         public async Task UpdateAsync(Sneaker sneaker)
         {

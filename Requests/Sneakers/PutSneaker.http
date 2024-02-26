@@ -1,12 +1,13 @@
 @SneakerCollection.API_HostAddress = http://localhost:5067
+@SneakerId = 953fc5b9-9f5b-44f4-b811-6d794b895294
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNmE4NGYwOC03NzVhLTRhOGEtOTQ0Yi01YWM3N2Y4MThlZDgiLCJnaXZlbl9uYW1lIjoiUmVuYW4iLCJmYW1pbHlfbmFtZSI6IkZlcm5hbmRlcyBTaWx2YSIsImVtYWlsIjoicmVuYW5mc3NpbHZhQGdtYWlsLmNvbSIsImp0aSI6IjViNjdlMjQzLTJiZjUtNDIxNi04MTQ5LWVkYjEwYzk3MTdlYyIsImV4cCI6MTcwODk3MzE3MiwiaXNzIjoiU25lYWtlckNvbGxlY3Rpb24iLCJhdWQiOiJTbmVha2VyQ29sbGVjdGlvbiJ9.Q3uWVEGy37VripX5ki4PRHgiW2Vn04bPIzTmxRGpvzc
 
-POST {{SneakerCollection.API_HostAddress}}/sneakers
+PUT {{SneakerCollection.API_HostAddress}}/sneakers/{{SneakerId}}
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name": "Air jordan",
+    "name": "Air jordan Updated",
     "brand":
     {
         "name": "Nike"

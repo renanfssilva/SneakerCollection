@@ -17,17 +17,16 @@ namespace SneakerCollection.Application.Sneakers.Commands.UpsertSneaker
                 return createUserIdResult.Errors;
 
             var sneakerId = SneakerId.Create(command.SneakerId);
-            var existingSneaker = await sneakerRepository.GetByIdAsync(sneakerId, createUserIdResult.Value);
 
-            if (existingSneaker is null)
-                return await InsertSneaker(command, createUserIdResult);
+            if (await sneakerRepository.ExistsAsync(sneakerId, createUserIdResult.Value))
+                return await UpdateSneaker(command, createUserIdResult, sneakerId);
 
-            return await UpdateSneaker(command, createUserIdResult, sneakerId, existingSneaker);
+            return await InsertSneaker(command, createUserIdResult);
         }
 
-        private async Task<ErrorOr<UpsertSneakerResponse>> UpdateSneaker(UpsertSneakerCommand command, ErrorOr<UserId> createUserIdResult, SneakerId sneakerId, Sneaker existingSneaker)
+        private async Task<ErrorOr<UpsertSneakerResponse>> UpdateSneaker(UpsertSneakerCommand command, ErrorOr<UserId> createUserIdResult, SneakerId sneakerId)
         {
-            var sneakerToUpdate = Sneaker.Update(
+            var sneaker = Sneaker.Update(
                 sneakerId,
                 command.Name,
                 Brand.Create(
@@ -38,12 +37,11 @@ namespace SneakerCollection.Application.Sneakers.Commands.UpsertSneaker
                 command.SizeUS,
                 command.Year,
                 command.Rate,
-                createUserIdResult.Value,
-                existingSneaker.CreatedAt);
+                createUserIdResult.Value);
 
-            await sneakerRepository.UpdateAsync(sneakerToUpdate);
+            await sneakerRepository.UpdateAsync(sneaker);
 
-            return new UpsertSneakerResponse(IsNewlyCreated: false, Sneaker: sneakerToUpdate);
+            return new UpsertSneakerResponse(IsNewlyCreated: false, Sneaker: sneaker);
         }
 
         private async Task<ErrorOr<UpsertSneakerResponse>> InsertSneaker(UpsertSneakerCommand command, ErrorOr<UserId> createUserIdResult)

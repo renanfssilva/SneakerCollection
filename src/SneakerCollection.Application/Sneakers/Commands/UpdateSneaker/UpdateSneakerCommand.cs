@@ -1,12 +1,12 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
-using SneakerCollection.Application.Sneakers.Commands.CreateSneaker;
+using SneakerCollection.Domain.SneakerAggregate;
 
 namespace SneakerCollection.Application.Sneakers.Commands.UpdateSneaker
 {
     public record UpdateSneakerCommand(
         Guid SneakerId,
         string UserId,
-        JsonPatchDocument<CreateSneakerCommand> JsonPatchDocument) : IRequest<ErrorOr<Updated>>;
+        JsonPatchDocument<Sneaker> JsonPatchDocument) : IRequest<ErrorOr<Updated>>;
 }

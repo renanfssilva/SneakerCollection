@@ -14,9 +14,6 @@ namespace SneakerCollection.Domain.SneakerAggregate
         public int Rate { get; private set; }
         public UserId UserId { get; private set; }
 
-        public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
-
         private Sneaker(SneakerId sneakerId,
             string name,
             Brand brand,
@@ -24,9 +21,7 @@ namespace SneakerCollection.Domain.SneakerAggregate
             double sizeUS,
             int year,
             int rate,
-            UserId userId,
-            DateTime createdAt,
-            DateTime updatedAt) : base(sneakerId)
+            UserId userId) : base(sneakerId)
         {
             Name = name;
             Brand = brand;
@@ -35,8 +30,6 @@ namespace SneakerCollection.Domain.SneakerAggregate
             Year = year;
             Rate = rate;
             UserId = userId;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
         }
 
         public static Sneaker Create(
@@ -56,9 +49,7 @@ namespace SneakerCollection.Domain.SneakerAggregate
                 sizeUS,
                 year,
                 rate,
-                userId,
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                userId);
         }
 
         public static Sneaker Update(
@@ -69,8 +60,7 @@ namespace SneakerCollection.Domain.SneakerAggregate
             double sizeUS,
             int year,
             int rate,
-            UserId userId,
-            DateTime createdAt)
+            UserId userId)
         {
             return new Sneaker(
                 sneakerId,
@@ -80,9 +70,7 @@ namespace SneakerCollection.Domain.SneakerAggregate
                 sizeUS,
                 year,
                 rate,
-                userId,
-                createdAt,
-                DateTime.UtcNow);
+                userId);
         }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

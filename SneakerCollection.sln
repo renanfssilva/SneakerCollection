@@ -40,7 +40,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sneakers", "Sneakers", "{A13CA089-94F3-4BB3-8AC1-47405C5E12D1}"
 	ProjectSection(SolutionItems) = preProject
 		Requests\Sneakers\CreateSneaker.http = Requests\Sneakers\CreateSneaker.http
+		DeleteSneaker.http = DeleteSneaker.http
+		GetSneakerById.http = GetSneakerById.http
 		Requests\Sneakers\ListSneakers.http = Requests\Sneakers\ListSneakers.http
+		PatchSneaker.http = PatchSneaker.http
+		PutSneaker.http = PutSneaker.http
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DBDC028-0BF1-44F1-B1E1-B0076C1922A0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
@@ -107,5 +116,8 @@ Global
 		{F249EE35-5EE1-49A0-8933-FE1B42E63C3C} = {5B7D6902-54A0-48EA-89FB-3E06662865B0}
 		{8163F271-219B-4D49-A2F5-59D2C9DE5300} = {722184AF-39A9-4E32-8B48-F37F20FBF1DD}
 		{A13CA089-94F3-4BB3-8AC1-47405C5E12D1} = {722184AF-39A9-4E32-8B48-F37F20FBF1DD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1EAB83D9-BB2E-4CE0-AC4B-8E40EC6EAB6A}
 	EndGlobalSection
 EndGlobal
