@@ -8,6 +8,7 @@ using SneakerCollection.Application.Sneakers.Commands.UpdateSneaker;
 using SneakerCollection.Application.Sneakers.Commands.UpsertSneaker;
 using SneakerCollection.Application.Sneakers.Queries.GetSneaker;
 using SneakerCollection.Application.Sneakers.Queries.ListSneakers;
+using SneakerCollection.Contracts.Common;
 using SneakerCollection.Contracts.Sneakers;
 using SneakerCollection.Domain.SneakerAggregate;
 using System.Security.Claims;
@@ -31,15 +32,18 @@ namespace SneakerCollection.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListSneakersAsync()
+        public async Task<IActionResult> ListSneakersAsync([FromQuery] GetSneakersListRequest request)
         {
             var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var query = mapper.Map<ListSneakersQuery>(userId);
+            var query = mapper.Map<ListSneakersQuery>((userId, request));
 
             var listSneakersResult = await mediator.Send(query);
 
             return listSneakersResult.Match(
-                sneakers => Ok(sneakers.ConvertAll(sneaker => mapper.Map<SneakerResponse>(sneaker))),
+                sneakers => Ok(new PagedList<SneakerResponse>(mapper.Map<List<SneakerResponse>>(sneakers.Items),
+                                                              sneakers.Page,
+                                                              sneakers.PageSize,
+                                                              sneakers.TotalCount)),
                 errors => Problem(errors));
         }
 

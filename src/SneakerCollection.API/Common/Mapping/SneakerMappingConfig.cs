@@ -41,8 +41,9 @@ namespace SneakerCollection.API.Common.Mapping
 
         private void RegisterQuerySneaker(TypeAdapterConfig config)
         {
-            config.NewConfig<string, ListSneakersQuery>()
-                .MapWith(src => new ListSneakersQuery(src));
+            config.NewConfig<(string UserId, GetSneakersListRequest? Request), ListSneakersQuery>()
+                .Map(dest => dest, src => src.Request)
+                .Map(dest => dest.UserId, src => src.UserId);
 
             config.NewConfig<(Guid SneakerId, string UserId), GetSneakerQuery>()
                 .Map(dest => dest.UserId, src => src.UserId)

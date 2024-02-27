@@ -53,13 +53,13 @@ namespace SneakerCollection.Infrastructure.Tests.Persistence
             await repository.AddAsync(sneaker);
 
             // Act
-            var result = await repository.ListAsync(sneaker.UserId);
+            var result = repository.List(sneaker.UserId, searchTerm: null, sortColumn: null, sortOrder: null);
 
             // Assert
             result.Should().NotBeEmpty();
             result.Should().HaveCount(1);
-            result[0].Id.Should().Be(sneaker.Id);
-            result[0].UserId.Should().Be(sneaker.UserId);
+            result.First().Id.Should().Be(sneaker.Id);
+            result.First().UserId.Should().Be(sneaker.UserId);
         }
 
         [Fact]
@@ -137,7 +137,7 @@ namespace SneakerCollection.Infrastructure.Tests.Persistence
             await repository.AddAsync(sneaker);
 
             // Act
-            var result = await repository.ListAsync(UserId.Create(Guid.NewGuid()));
+            var result = repository.List(UserId.Create(Guid.NewGuid()));
 
             // Assert
             result.Should().BeEmpty();

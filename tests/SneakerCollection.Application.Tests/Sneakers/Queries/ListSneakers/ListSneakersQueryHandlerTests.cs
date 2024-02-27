@@ -1,10 +1,12 @@
 ﻿using ErrorOr;
 using FluentAssertions;
+using MockQueryable.Moq;
 using Moq;
 using SneakerCollection.Application.Common.Interfaces.Persistence;
 using SneakerCollection.Application.Sneakers.Queries.ListSneakers;
 using SneakerCollection.Application.Tests.Sneakers.Queries.TestUtils;
 using SneakerCollection.Application.Tests.Sneakers.Utils;
+using SneakerCollection.Domain.SneakerAggregate;
 using SneakerCollection.Domain.UserAggregate.ValueObjects;
 
 namespace SneakerCollection.Application.Tests.Sneakers.Queries.ListSneakers
@@ -24,8 +26,12 @@ namespace SneakerCollection.Application.Tests.Sneakers.Queries.ListSneakers
         public async Task HandleListSneakersQuery_WhenSneakersExist_ShouldReturnSneakers()
         {
             // Arrange
-            var sneaker = SneakerUtils.CreateSneaker();
-            _mockSneakerRepository.Setup(s => s.ListAsync(It.IsAny<UserId>())).ReturnsAsync([sneaker]);
+            var sneakerList = new List<Sneaker> { SneakerUtils.CreateSneaker() };
+            var mockList = sneakerList.AsQueryable().BuildMock();
+            _mockSneakerRepository.Setup(s => s.List(It.IsAny<UserId>(),
+                                                          It.IsAny<string>(),
+                                                          It.IsAny<string>(),
+                                                          It.IsAny<string>())).Returns(mockList);
             var query = ListSneakersQueryUtils.GetQuery();
 
             // Act
@@ -33,15 +39,23 @@ namespace SneakerCollection.Application.Tests.Sneakers.Queries.ListSneakers
 
             // Assert
             result.IsError.Should().BeFalse();
-            result.Value.Should().BeEquivalentTo([sneaker]);
-            _mockSneakerRepository.Verify(s => s.ListAsync(It.IsAny<UserId>()), Times.Once);
+            result.Value.Items.Should().BeEquivalentTo(sneakerList.AsQueryable());
+            _mockSneakerRepository.Verify(s => s.List(It.IsAny<UserId>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public async Task HandleListSneakersQuery_WhenSneakersDoNotExist_ShouldReturnEmptyList()
         {
             // Arrange
-            _mockSneakerRepository.Setup(s => s.ListAsync(It.IsAny<UserId>())).ReturnsAsync([]);
+            var sneakerList = new List<Sneaker>();
+            var mockList = sneakerList.AsQueryable().BuildMock();
+            _mockSneakerRepository.Setup(s => s.List(It.IsAny<UserId>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>())).Returns(mockList);
             var query = ListSneakersQueryUtils.GetQuery();
 
             // Act
@@ -49,8 +63,11 @@ namespace SneakerCollection.Application.Tests.Sneakers.Queries.ListSneakers
 
             // Assert
             result.IsError.Should().BeFalse();
-            result.Value.Should().BeEmpty();
-            _mockSneakerRepository.Verify(s => s.ListAsync(It.IsAny<UserId>()), Times.Once);
+            result.Value.Items.Should().BeEmpty();
+            _mockSneakerRepository.Verify(s => s.List(It.IsAny<UserId>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
@@ -65,7 +82,10 @@ namespace SneakerCollection.Application.Tests.Sneakers.Queries.ListSneakers
             // Assert
             result.IsError.Should().BeTrue();
             result.FirstError.Type.Should().Be(ErrorType.Validation);
-            _mockSneakerRepository.Verify(s => s.ListAsync(It.IsAny<UserId>()), Times.Never);
+            _mockSneakerRepository.Verify(s => s.List(It.IsAny<UserId>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>(),
+                                                           It.IsAny<string>()), Times.Never);
         }
     }
 }
