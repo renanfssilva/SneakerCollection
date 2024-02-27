@@ -10,7 +10,7 @@ namespace SneakerCollection.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(ApplicationExtensions).Assembly));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationExtensions).Assembly));
 
             services.AddScoped(
                 typeof(IPipelineBehavior<,>),

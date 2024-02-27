@@ -1,5 +1,4 @@
 ﻿using ErrorOr;
-using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using SneakerCollection.Application.Common.Interfaces.Persistence;
@@ -11,7 +10,7 @@ using System.Reflection;
 
 namespace SneakerCollection.Application.Sneakers.Commands.UpdateSneaker
 {
-    public class UpdateSneakerCommandHandler(ISneakerRepository sneakerRepository, IMapper mapper) : IRequestHandler<UpdateSneakerCommand, ErrorOr<Updated>>
+    public class UpdateSneakerCommandHandler(ISneakerRepository sneakerRepository) : IRequestHandler<UpdateSneakerCommand, ErrorOr<Updated>>
     {
         public async Task<ErrorOr<Updated>> Handle(UpdateSneakerCommand command, CancellationToken cancellationToken)
         {
@@ -26,9 +25,7 @@ namespace SneakerCollection.Application.Sneakers.Commands.UpdateSneaker
             if (existingSneaker is null)
                 return Errors.Sneaker.NotFound;
 
-            var sneakerPatch = mapper.Map<JsonPatchDocument<Sneaker>>(command.JsonPatchDocument);
-
-            await PatchAsync(sneakerPatch, existingSneaker);
+            await PatchAsync(command.JsonPatchDocument, existingSneaker);
 
             return Result.Updated;
         }

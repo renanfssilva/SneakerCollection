@@ -3,7 +3,6 @@ using SneakerCollection.Application.Common.Interfaces.Persistence;
 using SneakerCollection.Domain.SneakerAggregate;
 using SneakerCollection.Domain.SneakerAggregate.ValueObjects;
 using SneakerCollection.Domain.UserAggregate.ValueObjects;
-using System.Reflection;
 
 namespace SneakerCollection.Infrastructure.Persistence.Repositories
 {
