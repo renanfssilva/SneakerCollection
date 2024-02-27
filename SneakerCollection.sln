@@ -34,11 +34,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sneakers", "Sneakers", "{A13CA089-94F3-4BB3-8AC1-47405C5E12D1}"
 	ProjectSection(SolutionItems) = preProject
 		Requests\Sneakers\CreateSneaker.http = Requests\Sneakers\CreateSneaker.http
-		DeleteSneaker.http = DeleteSneaker.http
-		GetSneakerById.http = GetSneakerById.http
+		Requests\Sneakers\DeleteSneaker.http = Requests\Sneakers\DeleteSneaker.http
+		Requests\Sneakers\GetSneakerById.http = Requests\Sneakers\GetSneakerById.http
 		Requests\Sneakers\ListSneakers.http = Requests\Sneakers\ListSneakers.http
-		PatchSneaker.http = PatchSneaker.http
-		PutSneaker.http = PutSneaker.http
+		Requests\Sneakers\PatchSneaker.http = Requests\Sneakers\PatchSneaker.http
+		Requests\Sneakers\PutSneaker.http = Requests\Sneakers\PutSneaker.http
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DBDC028-0BF1-44F1-B1E1-B0076C1922A0}"

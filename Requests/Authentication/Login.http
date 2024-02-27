@@ -4,6 +4,6 @@ POST {{SneakerCollection.API_HostAddress}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "renanfssilva@gmail.com",
-    "password": "Renan123!"
+    "email": "test@test.com",
+    "password": "Test123!"
 }
